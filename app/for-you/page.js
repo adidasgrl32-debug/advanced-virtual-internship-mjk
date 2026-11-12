@@ -16,7 +16,6 @@ import React, { useState, useEffect } from "react";
 
 export default function foryouPage() {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -102,7 +101,7 @@ export default function foryouPage() {
                     <IoMdSearch className="w-6 h-6" /> Search</div>
                 </div>
               </div>
-              
+
               <div className="sidebar__bottom">
                 <a className="sidebar__link--wrapper" href="/settings">
                   <div className="sidebar__link--line" />
