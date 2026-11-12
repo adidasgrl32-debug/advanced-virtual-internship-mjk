@@ -895,3 +895,30 @@ figure {
   width: 16px;
   height: 16px;
 }
+
+/* MEDIA 768PX */
+@media (max-width: 768px) {
+  .wrapper {
+    margin-left: 0;
+    width: 100%;
+  }
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .selected__book {
+    width: 100%;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .selected__book--sub-title {
+    width: 100%;
+    font-size: 14px;
+  }
+  .selected__book--line {
+    display: none;
+  }
+  .selected__book--content, .selected__book--text {
+    width: 100%;
+  }
+}
+
