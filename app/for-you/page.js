@@ -12,6 +12,7 @@ import { CiClock2, CiStar } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import SearchBar from "../components/SearchBar";
 
 export default function ForYouPage() {
   const [selectedBook, setSelectedBook] = useState(null);
@@ -58,22 +59,7 @@ export default function ForYouPage() {
             <figure>
               <img src="logo" alt="" />
             </figure>
-
-            <div className="search__content">
-              <div className="search">
-                <div className="search__input--wrapper">
-                  <input
-                    className="search__input"
-                    placeholder="Search for books"
-                    type="text"
-                    defaultValue=""
-                  />
-
-                  <div className="search__icon">
-                    <IoMdSearch />
-                  </div>
-                </div>
-              </div>
+            <SearchBar />
 
               <div
                 className="sidebar__toggle--btn"
@@ -85,7 +71,6 @@ export default function ForYouPage() {
               </div>
             </div>
           </div>
-        </div>
 
         <div
           className={`sidebar__overlay ${

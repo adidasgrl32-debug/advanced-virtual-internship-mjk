@@ -11,34 +11,34 @@ import { CiClock2, CiStar } from "react-icons/ci";
 import { HiOutlineMicrophone, HiOutlineLightBulb } from "react-icons/hi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import React, { useEffect, useState, use } from "react";
+import SearchBar from "@/app/components/SearchBar";
 
-export default function BookIdPage() {
+export default function BookIdPage({ params }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const params = useParams();
-  const id = params?.id;
+  const { id } = use(params);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (!id) return;
-
     axios
       .get(`https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`)
       .then((response) => {
-        setData(response.data || []);
+        setData([response.data]);
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.message || "Something went wrong");
+        setError(err.message);
         setIsLoading(false);
       });
   }, [id]);
 
   if (error) return <p>Error: {error}</p>;
-  if (isLoading) return <p>Loading...</p>;
-
   return (
     <div className="wrapper">
       <div className="search__background">
@@ -46,18 +46,7 @@ export default function BookIdPage() {
          <figure>
               <img src="logo" alt="" />
             </figure>
-          <div className="search__content">
-            <div className="search">
-              <div className="search__input--wrapper">
-                <input
-                  className="search__input"
-                  placeholder="Search for books"
-                  type="text"
-                  defaultValue=""
-                />
-                <div className="search__icon">
-                  <IoMdSearch />
-                </div>
+            <SearchBar />
               </div>
             </div>
             <div className="sidebar__toggle--btn">
@@ -65,9 +54,6 @@ export default function BookIdPage() {
                 <RxHamburgerMenu />
               </button>
             </div>
-          </div>
-        </div>
-      </div>
 
       <div className="sidebar__overlay sidebar__overlay--hidden" />
       <div className="sidebar sidebar--closed">
@@ -105,7 +91,6 @@ export default function BookIdPage() {
               </div>
             </div>
           </div>
-
           <div className="sidebar__bottom">
             <a className="sidebar__link--wrapper" href="/settings">
               <div className="sidebar__link--line" />
@@ -147,22 +132,20 @@ export default function BookIdPage() {
                       <div className="inner-book__icon">
                         <CiStar />
                       </div>
-                      <div className="inner-book__overall--rating">{item.averageRating}</div>
-                      <div className="inner-book__total--rating">{item.totalRating}</div>
+                      <div className="inner-book__overall--rating"> {item.averageRating}</div>
+                      <div className="inner-book__total--rating">({item.totalRating} Ratings)</div>
                     </div>
                     <div className="inner-book__description">
                       <CiClock2 />
                       <div className="inner-book__duration">{item.duration}</div>
                     </div>
                   </div>
-
                   <div className="inner-book__description">
                     <div className="inner-book__icon">
                       <HiOutlineMicrophone />
                     </div>
                     <div className="inner-book__type">{item.type}</div>
                   </div>
-
                   <div className="inner-book__description">
                     <div className="inner-book__icon">
                       <HiOutlineLightBulb />
@@ -170,29 +153,23 @@ export default function BookIdPage() {
                     <div className="inner-book__key--ideas">{item.keyIdeas}</div>
                   </div>
                 </div>
-              </div>
-
               <div className="inner-book__read--btn-wrapper">
                 <button className="inner-book__read--btn">
                   <div className="inner-book__read--text">Read</div>
                 </button>
               </div>
-
               <div className="inner-book__bookmark">
                 <div className="inner-book__bookmark-icon">
                   <FaRegBookmark />
                 </div>
                 <div className="inner-book__bookmark--text">Add title to My Library</div>
               </div>
-
               <div className="inner-book__secondary--title">What's it about?</div>
               <div className="inner-book__tags--wrapper" />
               <div className="inner-book__book--description">{item.bookDescription}</div>
-
               <h2 className="inner-book__secondary--title">About the author</h2>
               <div className="inner-book__author--description">{item.authorDescription}</div>
             </div>
-
             <div className="inner-book--img-wrapper">
               <figure className="book__image--wrapper">
                 {item.imageLink ? (
@@ -208,6 +185,7 @@ export default function BookIdPage() {
             </div>
           </div>
         </div>
+      </div>
       ))}
     </div>
   );
