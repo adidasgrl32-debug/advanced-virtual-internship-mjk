@@ -116,7 +116,6 @@ export default function playerPage() {
                     <div className="skeleton" style="width:100px;height:16px"></div>
                   </div>
                 </div>
-                
               </div>
             </div>
         </div>

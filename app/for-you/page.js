@@ -14,13 +14,13 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import SearchBar from "../components/SearchBar";
 
-export default function ForYouPage() {
+export default function ForYouPage({ data }) {
   const [selectedBook, setSelectedBook] = useState(null);
   const [recommendedBooks, setRecommendedBooks] = useState([]);
   const [suggestedBooks, setSuggestedBooks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [error, setError] = useState(null);
-
+ 
   useEffect(() => {
     async function fetchBooks() {
       try {
@@ -59,8 +59,7 @@ export default function ForYouPage() {
             <figure>
               <img src="logo" alt="" />
             </figure>
-            <SearchBar />
-
+              <SearchBar />
               <div
                 className="sidebar__toggle--btn"
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -71,7 +70,6 @@ export default function ForYouPage() {
               </div>
             </div>
           </div>
-
         <div
           className={`sidebar__overlay ${
             isSidebarOpen ? "" : "sidebar__overlay--hidden"
@@ -158,26 +156,21 @@ export default function ForYouPage() {
                 <div className="sidebar__icon--wrapper">
                   <MdLogin />
                 </div>
-
                 <div className="sidebar__link--text">Login</div>
               </a>
             </div>
           </div>
         </div>
-
         <div className="row">
           <div className="container">
             <div className="for-you__wrapper">
               <div className="for-you__title">Selected just for you</div>
-
               {selectedBook && (
                 <a className="selected__book" href={`/book/${selectedBook.id}`}>
                   <div className="selected__book--sub-title">
                     {selectedBook.subTitle}
                   </div>
-
                   <div className="selected__book--line" />
-
                   <div className="selected__book--content">
                     <figure
                       className="book__image--wrapper"
@@ -201,7 +194,6 @@ export default function ForYouPage() {
                         }}
                       />
                     </figure>
-
                     <div className="selected__book--text">
                       <div className="selected__book--title">
                         {selectedBook.title}
@@ -210,14 +202,12 @@ export default function ForYouPage() {
                       <div className="selected__book--author">
                         {selectedBook.author}
                       </div>
-
                       <div className="selected__book--duration-wrapper">
                         <div className="selected__book--icon">
                           <button type="button">
                             <IoIosPlayCircle />
                           </button>
                         </div>
-
                         <div className="selected__book--duration">
                           3 mins 23 secs
                         </div>
@@ -226,21 +216,23 @@ export default function ForYouPage() {
                   </div>
                 </a>
               )}
-
               <div>
                 <div className="for-you__title">Recommended For You</div>
-
                 <div className="for-you__sub--title">
                   We think you'll like these
                 </div>
-
                 <div className="for-you__recommended--books">
                   {recommendedBooks.map((item) => (
                     <a
                       key={item.id}
                       className="for-you__recommended--books-link"
-                      href={`/book/${item.id}`}
+                      href={`/book/${item.id}`}    
                     >
+                      {data?.subscription?.premium && (
+                        <div className="book__pill book__pill--subscription-required">
+                          {item.subscriptionRequired} Premium
+                        </div>
+                      )}
                       <figure className="book__image--wrapper">
                         <img
                           src={item.imageLink}
@@ -251,19 +243,15 @@ export default function ForYouPage() {
                           }}
                         />
                       </figure>
-
                       <div className="recommended__book--title">
                         {item.title}
                       </div>
-
                       <div className="recommended__book--author">
                         {item.author}
                       </div>
-
                       <div className="recommended__book--sub-title">
                         {item.subTitle}
                       </div>
-
                       <div className="recommended__book--details-wrapper">
                         <div className="recommended__book--details">
                           <div className="recommended__book--details-icon">

@@ -549,7 +549,7 @@ button:disabled {
   flex-direction: column;
   margin-left: 200px;
   width: calc(100% - 200px);
-  transition: all .3s
+  transition: all .3s;
 }
 
 .search__background {
@@ -564,9 +564,9 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
+  padding: 0px 32px;
   max-width: 1070px;
-  margin: 0 auto;
+  margin: 0px auto;
   height: 100%;
 }
 
@@ -583,6 +583,19 @@ button:disabled {
   align-items: center;
   width: 100%;
   position: relative;
+}
+
+.search__input--wrapper {
+  position: relative;
+  gap: 8px;
+}
+
+.search__books--wrapper {
+  position: absolute;
+  top: 48px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 2;
 }
 
 .search__input {
@@ -605,6 +618,12 @@ button:disabled {
   justify-content: flex-end;
   border-left: 2px solid #e1e7ea;
   padding-left: 8px;
+}
+
+.search__icon svg {
+  width: 24px;
+  height: 24px;
+  color: #03314b;
 }
 
 .sidebar__toggle--btn {
@@ -681,7 +700,6 @@ button:disabled {
   margin-bottom: 8px;
   cursor: pointer;
 }
-
 
 .sidebar__icon--wrapper svg { 
   width: 24px;
@@ -905,6 +923,22 @@ button:disabled {
   height: 16px;
 }
 
+.book__pill {
+  background-color: #032b41;
+  width: max fit content;
+  width: fit-content;
+  height: 18px;
+  padding: 0 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+}
+
 /* MEDIA 768PX */
 @media (max-width: 768px) {
   .wrapper {
@@ -1010,7 +1044,7 @@ button:disabled {
   align-items: center;
   justify-content: center;
   width: 144px;
-  height:48px;
+  height: 48px;
   background-color: #032b41;
   color: #fff;
   font-size: 16px;
@@ -1056,6 +1090,19 @@ button:disabled {
   margin-bottom: 16px;
 }
 
+.inner-book__tag {
+  background-color: #f1f6f4;
+  padding: 0 16px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  cursor: not-allowed;
+  color: #032b41;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: backround-color .2s;
+}
+
 .inner-book__book--description {
   color: #032b41;
   margin-bottom: 16px;
@@ -1085,5 +1132,8 @@ button:disabled {
   .inner-book__img--wrapper {
     display: flex;
     justify-content: center;
+  }
+  .inner-book__bookmark {
+    font-size: 16px;
   }
 }
