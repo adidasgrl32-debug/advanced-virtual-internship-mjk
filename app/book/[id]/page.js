@@ -13,7 +13,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { SlBookOpen } from "react-icons/sl";
 import axios from "axios";
 import React, { useEffect, useState, use } from "react";
-import SearchBar from "@/app/components/SearchBar";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 
 export default function BookIdPage({ params }) {
   const [data, setData] = useState([]);
@@ -60,6 +62,8 @@ export default function BookIdPage({ params }) {
 
   if (error) return <p>Error: {error}</p>;
 
+  const skeletonItems = Array.from({ length: 4 });
+
   return (
     <div className="wrapper">
       <div className="search__background">
@@ -87,7 +91,7 @@ export default function BookIdPage({ params }) {
             </div>
           </div>
 
-                    {search && (
+            {search && (
             <div className="search__books--wrapper">
               {searchResults.length === 0 ? (
                 <div className="search__book--link">No books found</div>
@@ -128,6 +132,24 @@ export default function BookIdPage({ params }) {
           )}
         </div>
       </div>
+
+                {isLoading ? (
+                  skeletonItems.map((_, index) => (
+                    <div className="row" key={index}>
+                        <div className="container">
+                          <Skeleton width="100%" height="180px" borderRadius="12px" />
+                        </div>
+                        <div className="book__image--wrapper">
+                          <Skeleton width="60px" height="60px" borderRadius="50%" />
+                        </div>
+                        <div className="book__image">
+                          <Skeleton width="70%" height="20px" borderRadius="6px" />
+                          <Skeleton width="40%" height="16px" borderRadius="6px" />
+                        </div>
+                      </div>
+                  ))
+                ) : (
+                    <>
 
       <div className="sidebar__overlay sidebar__overlay--hidden" />
       <div className="sidebar sidebar--closed">
@@ -201,7 +223,6 @@ export default function BookIdPage({ params }) {
                 <div className="inner-book__title">{item.title}</div>
                 <div className="inner-book__author">{item.author}</div>
                 <div className="inner-book__sub--title">{item.subTitle}</div>
-
                 <div className="inner-book__wrapper">
                   <div className="inner-book__description--wrapper">
                     <div className="inner-book__description">
@@ -211,21 +232,18 @@ export default function BookIdPage({ params }) {
                       <div className="inner-book__overall--rating">{item.averageRating}</div>
                       <div className="inner-book__total--rating">({item.totalRating} Ratings)</div>
                     </div>
-
                     <div className="inner-book__description">
                       <div className="inner-book__icon">
                         <CiClock2 />
                       </div>
                       <div className="inner-book__duration">{item.duration}00.00</div>
                     </div>
-
                     <div className="inner-book__description">
                       <div className="inner-book__icon">
                         <HiOutlineMicrophone />
                       </div>
                       <div className="inner-book__type">{item.type}</div>
                     </div>
-
                     <div className="inner-book__description">
                       <div className="inner-book__icon">
                         <HiOutlineLightBulb />
@@ -234,7 +252,6 @@ export default function BookIdPage({ params }) {
                     </div>
                   </div>
                 </div>
-
                 <div className="inner-book__read--btn-wrapper">
                   <button className="inner-book__read--btn">
                     <div className="inner-book__read--icon">
@@ -249,25 +266,21 @@ export default function BookIdPage({ params }) {
                     <div className="inner-book__read--text">Listen</div>
                   </button>
                 </div>
-
                 <div className="inner-book__bookmark">
                   <div className="inner-book__bookmark-icon">
                     <FaRegBookmark />
                   </div>
                   <div className="inner-book__bookmark--text">Add title to My Library</div>
                 </div>
-
                 <div className="inner-book__secondary--title">What's it about?</div>
                 <div className="inner-book__tags--wrapper">
                   <div className="inner-book__tag">{item.tags[0]}</div>
                   <div className="inner-book__tag">{item.tags[1]}</div>
                 </div>
-
                 <div className="inner-book__book--description">{item.bookDescription}</div>
                 <h2 className="inner-book__secondary--title">About the author</h2>
                 <div className="inner-book__author--description">{item.authorDescription}</div>
               </div>
-
               <div className="inner-book--img-wrapper">
                 <figure
                   className="book__image--wrapper"
@@ -287,6 +300,8 @@ export default function BookIdPage({ params }) {
           </div>
         </div>
       ))}
+      </>
+      )}
     </div>
   );
 }

@@ -12,6 +12,8 @@ import { CiClock2, CiStar } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function ForYouPage() {
   const [selectedBooks, setSelectedBooks] = useState([]);
@@ -40,17 +42,13 @@ export default function ForYouPage() {
 
       .then(([selectedRes, recommendedRes, suggestedRes]) => {
         setSelectedBooks(selectedRes.data);
-
         setRecommendedBooks(recommendedRes.data);
-
         setSuggestedBooks(suggestedRes.data);
-
         setIsLoading(false);
       })
 
       .catch((err) => {
         setError(err.message);
-
         setIsLoading(false);
       });
   }, []);
@@ -76,6 +74,8 @@ export default function ForYouPage() {
   }, [search]);
 
   if (error) return <p>Error: {error}</p>;
+
+  const skeletonItems = Array.from({ length: 4 });
 
   return (
     <div className="wrapper">
@@ -146,6 +146,24 @@ export default function ForYouPage() {
           )}
         </div>
       </div>
+
+          {isLoading ? (
+            skeletonItems.map((_, index) => (
+              <div className="row" key={index}>
+                  <div className="container">
+                    <Skeleton width="100%" height="180px" borderRadius="12px" />
+                  </div>
+                  <div className="book__image--wrapper">
+                    <Skeleton width="60px" height="60px" borderRadius="50%" />
+                  </div>
+                  <div className="book__image">
+                    <Skeleton width="70%" height="20px" borderRadius="6px" />
+                    <Skeleton width="40%" height="16px" borderRadius="6px" />
+                  </div>
+                </div>
+            ))
+          ) : (
+              <>
 
       <div className="sidebar__overlay sidebar__overlay--hidden"></div>
       <div className="sidebar sidebar--closed">
@@ -401,6 +419,8 @@ export default function ForYouPage() {
           </div>
         </div>
       </div>
+            </>
+          )}
     </div>
   );
 }

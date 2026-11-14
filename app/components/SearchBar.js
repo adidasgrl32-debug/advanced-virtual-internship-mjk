@@ -40,16 +40,34 @@ export default function SearchBar() {
 
       {search && (
         <div className="search__books--wrapper">
-          {results.length === 0 && <div>No books found</div>}
-          {results.map((book) => (
-            <a key={book.id} className="search__book--link" href={`/book/${book.id}`}>
-              <img className="search__book--image" src={book.imageLink} alt={book.title} />
-              <div>
-                <div className="search__book--title">{book.title}</div>
-                <div className="search__book--author">{book.author}</div>
-              </div>
-            </a>
-          ))}
+          {results.length === 0 ? (
+            <div className="search__book--link">No books found</div>
+          ) : (
+            results.map((book) => (
+              <a
+                key={book.id}
+                className="search__book--link"
+                href={`/book/${book.id}`}
+              >
+                <figure className="search__book--image--wrapper book__image--wrapper">
+                  <img
+                    className="search__book--image book__image"
+                    src={book.imageLink}
+                    alt={book.title}
+                  />
+                </figure>
+                <div>
+                  <div className="search__book--title">{book.title}</div>
+                  <div className="search__book--author">{book.author}</div>
+                  {book.duration && (
+                    <div className="search__book--duration">
+                      {book.duration}
+                    </div>
+                  )}
+                </div>
+              </a>
+            ))
+          )}
         </div>
       )}
     </div>
