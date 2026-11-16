@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useState } from 'react';
-import AuthModal from './AuthModal';
+import { auth } from '../lib/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { GuestLoginButton } from './GuestLoginButton';
 
 export default function LoginModal() {
@@ -9,14 +10,16 @@ export default function LoginModal() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Logging in with:', { email, password });
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    setEmail('');
-    setPassword('');
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
     setIsOpen(false);
-  };
+  } catch (error) {
+    alert(error instanceof Error ? error.message : 'Signup failed');
+  }
+};
 
   return React.createElement(
     'div',

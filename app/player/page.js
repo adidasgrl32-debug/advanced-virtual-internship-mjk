@@ -10,6 +10,7 @@ import { MdHelpOutline, MdLogin } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import React, { useEffect, useState, use } from "react";
+import AudiobookPlayer from "../components/AudiobookPlayer";
 
 export default function PlayerPage({ params }) {
   const [data, setData] = useState([]);
@@ -273,7 +274,7 @@ export default function PlayerPage({ params }) {
             <svg>spinner</svg>
           </div>
           <div className="audio__wrapper">
-            <audio></audio>
+            <audio src=""></audio>
             <div className="audio__track--wrapper">
               <figure className="audio__track--image-mask">
                 <figure
@@ -306,6 +307,7 @@ export default function PlayerPage({ params }) {
               </div>
             </div>
             <div className="audio__controls--wrapper">
+              <AudiobookPlayer />
               <div className="audio__controls">
                 <button className="audio__controls--btn">
                   <svg

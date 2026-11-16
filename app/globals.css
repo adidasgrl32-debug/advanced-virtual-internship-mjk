@@ -1322,7 +1322,7 @@ button:disabled {
   height: 54px;
 }
 
-.audio__wrapper>div {
+.audio__wrapper> div {
   width: calc(100% / 3);
 }
 
@@ -1336,8 +1336,18 @@ button:disabled {
   max-width: 48px;
 }
 
+.book__image--wrapper {
+  width: 172px;
+  height: 172px;
+}
+
+.book__image {
+  width: 100%;
+  height: 100%;
+}
+
 .audio__track--details-wrapper {
-  color: #fff;
+  color: rgb(255, 255, 255);
   font-size: 14px;
   display: flex;
   flex-direction: column;
@@ -1346,7 +1356,7 @@ button:disabled {
 }
 
 .audio__track--author {
-  color: #bac8ce;
+  color: rgb(186, 200, 206);
 }
 
 .audio__controls, .audio__controls--btn {
@@ -1367,18 +1377,18 @@ button:disabled {
 .audio__controls--btn svg {
   width: 28px;
   height: 28px;
-  stroke: #fff;
-  transition: all .2s;
+  stroke: rgb(255, 255, 255);
+  transition: 0.2s;
 }
 
 .audio__controls--btn-play {
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
   width: 40px;
   height: 40px;
 }
 
 .audio__controls--btn-play svg {
-  color: #042330;
+  color: rgb(4, 35, 48);
 }
 
 .audio__controls--play-icon {
@@ -1419,6 +1429,23 @@ button:disabled {
 .book__image {
   width: 100%;
   height: 100%;
+}
+
+input[type="range"] {
+  --range-progress: 0;
+}
+
+input[type="range"]::before {
+  background: #f50;
+  width: var(--range-progress);
+}
+
+input[type="range"] {
+  --range-progress: 50%;
+}
+
+input[type="range"] {
+  --range-progress: 0;
 }
 
 @media (max-width: 768px) {
@@ -1506,7 +1533,7 @@ button:disabled {
   cursor: pointer;
   outline: none;
   border: none;
-  background-color: transparent;
+  background-color: #20ba68;
 }
 
 /* CHOOSE-PLAN */

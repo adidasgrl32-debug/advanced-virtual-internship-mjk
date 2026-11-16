@@ -149,8 +149,8 @@ export default function BookIdPage({ params }) {
           </div>
         ))
       ) : (
-        <>
-          <div className="sidebar__overlay sidebar__overlay--hidden" />
+     <>
+          <div className="sidebar__overlay sidebar__overlay--hidden"></div>
           <div className="sidebar sidebar--closed">
             <div className="sidebar__logo">
               <Image
@@ -158,19 +158,20 @@ export default function BookIdPage({ params }) {
                 alt="Company Logo"
                 width={200}
                 height={46}
-                priority
               />
             </div>
             <div className="sidebar__wrapper">
               <div className="sidebar__top">
                 <a className="sidebar__link--wrapper" href="/for-you">
                   <div className="sidebar__link--line active--tab" />
+
                   <div className="sidebar__icon--wrapper" />
+
                   <div className="sidebar__link--text">
                     <AiOutlineHome className="w-6 h-6" /> For you
                   </div>
                 </a>
-                <a className="sidebar__link--wrappersidebar__link--not-allowed">
+                <a className="sidebar__link--wrapper sidebar__link--not-allowed">
                   <div className="sidebar__link--line" />
                   <div className="sidebar__icon--wrapper" />
                   <div className="sidebar__link--text">
@@ -192,7 +193,6 @@ export default function BookIdPage({ params }) {
                   </div>
                 </div>
               </div>
-
               <div className="sidebar__bottom">
                 <a className="sidebar__link--wrapper" href="/settings">
                   <div className="sidebar__link--line" />
