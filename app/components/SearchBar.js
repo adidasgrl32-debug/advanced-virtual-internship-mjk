@@ -16,7 +16,9 @@ export default function SearchBar() {
 
     const timer = setTimeout(() => {
       axios
-        .get(`https://us-central1-summaristt.cloudfunctions.net/getBooksByAuthorOrTitle?search=${search}`)
+        .get(
+          `https://us-central1-summaristt.cloudfunctions.net/getBooksByAuthorOrTitle?search=${search}`,
+        )
         .then((response) => setResults(response.data));
     }, 300);
 
@@ -42,8 +44,16 @@ export default function SearchBar() {
         <div className="search__books--wrapper">
           {results.length === 0 && <div>No books found</div>}
           {results.map((book) => (
-            <a key={book.id} className="search__book--link" href={`/book/${book.id}`}>
-              <img className="search__book--image" src={book.imageLink} alt={book.title} />
+            <a
+              key={book.id}
+              className="search__book--link"
+              href={`/book/${book.id}`}
+            >
+              <img
+                className="search__book--image"
+                src={book.imageLink}
+                alt={book.title}
+              />
               <div>
                 <div className="search__book--title">{book.title}</div>
                 <div className="search__book--author">{book.author}</div>
