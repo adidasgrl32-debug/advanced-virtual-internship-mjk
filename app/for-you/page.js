@@ -184,7 +184,7 @@ export default function ForYouPage() {
                     <AiOutlineHome className="w-6 h-6" /> For you
                   </div>
                 </a>
-                <a className="sidebar__link--wrapper" href="/for-you">
+                <a className="sidebar__link--wrapper sidebar__link--not-allowed">
                   <div className="sidebar__link--line" />
                   <div className="sidebar__icon--wrapper" />
                   <div className="sidebar__link--text">

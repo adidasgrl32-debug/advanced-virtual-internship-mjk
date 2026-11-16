@@ -170,8 +170,8 @@ export default function BookIdPage({ params }) {
                     <AiOutlineHome className="w-6 h-6" /> For you
                   </div>
                 </a>
-                <a className="sidebar__link--wrapper" href="/for-you">
-                  <div className="sidebar__link--line active--tab" />
+                <a className="sidebar__link--wrappersidebar__link--not-allowed">
+                  <div className="sidebar__link--line" />
                   <div className="sidebar__icon--wrapper" />
                   <div className="sidebar__link--text">
                     <FaRegBookmark /> My Library

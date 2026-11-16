@@ -7,6 +7,7 @@ import { BiCrown } from "react-icons/bi";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { RiLeafLine } from "react-icons/ri";
 import LoginTrigger from "./components/LoginTrigger";
+import { auth } from "./lib/firebase";
 
 export default function Home() {
   return (
