@@ -10,7 +10,7 @@ import { MdHelpOutline, MdLogin } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import React, { useEffect, useState, use } from "react";
-import AudiobookPlayer from "../components/AudiobookPlayer";
+import AudiobookPlayer from "../../components/AudiobookPlayer";
 
 export default function PlayerPage({ params }) {
   const [data, setData] = useState([]);
@@ -189,7 +189,7 @@ export default function PlayerPage({ params }) {
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
-                  stroke-width="0"
+                  strokeWidth="0"
                   viewBox="0 0 24 24"
                   className="sidebar__font--size-icon-medium"
                   height="1em"
@@ -239,31 +239,32 @@ export default function PlayerPage({ params }) {
             </div>
           </div>
 
-          <div className="sidebar__bottom">
-            <a className="sidebar__link--wrapper" href="/settings">
-              <div className="sidebar__link--line" />
-              <div className="sidebar__icon--wrapper" />
-              <div className="sidebar__link--text">
-                <IoSettingsOutline className="w-6 h-6" /> Settings
-              </div>
-            </a>
-            <div className="sidebar__link--wrapper sidebar__link--not-allowed">
-              <div className="sidebar__link--line" />
-              <div className="sidebar__icon--wrapper" />
-              <div className="sidebar__link--text">
-                <MdHelpOutline className="w-6 h-6" /> Help & Support
-              </div>
-            </div>
-            <div className="sidebar__link--wrapper">
-              <div className="sidebar__link--line" />
-              <div className="sidebar__icon--wrapper" />
-              <div className="sidebar__link--text">
-                <MdLogin /> Login
+              <div className="sidebar__bottom">
+                <a className="sidebar__link--wrapper" href="/settings">
+                  <div className="sidebar__link--line" />
+                  <div className="sidebar__icon--wrapper" />
+                  <div className="sidebar__link--text">
+                    <IoSettingsOutline className="w-6 h-6" /> Settings
+                  </div>
+                </a>
+                <div className="sidebar__link--wrapper sidebar__link--not-allowed">
+                  <div className="sidebar__link--line" />
+                  <div className="sidebar__icon--wrapper" />
+                  <div className="sidebar__link--text">
+                    <MdHelpOutline className="w-6 h-6" /> Help & Support
+                  </div>
+                </div>
+                <div className="sidebar__link--wrapper">
+                  <div className="sidebar__link--line" />
+                  <div className="sidebar__icon--wrapper" />
+                  <div className="sidebar__link--text">
+                    <MdLogin /> Login
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+          
       {data?.map?.((item, index) => (
         <div key={index} className="summary">
           <div className="audio__book--summary" style={{ fontSize: "16px" }}>
@@ -274,7 +275,8 @@ export default function PlayerPage({ params }) {
             <svg>spinner</svg>
           </div>
           <div className="audio__wrapper">
-            <audio src=""></audio>
+            <AudiobookPlayer />
+            <audio src={item.audioLink} controls />
             <div className="audio__track--wrapper">
               <figure className="audio__track--image-mask">
                 <figure
@@ -305,76 +307,6 @@ export default function PlayerPage({ params }) {
                 ></div>
                 <div className="audio__track--author">{item.author}</div>
               </div>
-            </div>
-            <div className="audio__controls--wrapper">
-              <AudiobookPlayer />
-              <div className="audio__controls">
-                <button className="audio__controls--btn">
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 24 24"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="none"
-                      stroke="#000"
-                      strokeWidth="2"
-                      d="M3.11111111,7.55555556 C4.66955145,4.26701301 8.0700311,2 12,2 C17.5228475,2 22,6.4771525 22,12 C22,17.5228475 17.5228475,22 12,22 L12,22 C6.4771525,22 2,17.5228475 2,12 M2,4 L2,8 L6,8 M9,16 L9,9 L7,9.53333333 M17,12 C17,10 15.9999999,8.5 14.5,8.5 C13.0000001,8.5 12,10 12,12 C12,14 13,15.5000001 14.5,15.5 C16,15.4999999 17,14 17,12 Z M14.5,8.5 C16.9253741,8.5 17,11 17,12 C17,13 17,15.5 14.5,15.5 C12,15.5 12,13 12,12 C12,11 12.059,8.5 14.5,8.5 Z"
-                    ></path>
-                  </svg>
-                </button>
-                <button className="audio__controls--btn audio__controls--btn-play">
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 512 512"
-                    className="audio__controls--play-icon"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M96 448l320-192L96 64v384z"></path>
-                  </svg>
-                </button>
-                <button className="audio__controls--btn">
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 24 24"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="none"
-                      stroke="#000"
-                      strokeWidth="2"
-                      d="M20.8888889,7.55555556 C19.3304485,4.26701301 15.9299689,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 L12,22 C17.5228475,22 22,17.5228475 22,12 M22,4 L22,8 L18,8 M9,16 L9,9 L7,9.53333333 M17,12 C17,10 15.9999999,8.5 14.5,8.5 C13.0000001,8.5 12,10 12,12 C12,14 13,15.5000001 14.5,15.5 C16,15.4999999 17,14 17,12 Z M14.5,8.5 C16.9253741,8.5 17,11 17,12 C17,13 17,15.5 14.5,15.5 C12,15.5 12,13 12,12 C12,11 12.059,8.5 14.5,8.5 Z"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div className="audio__progress--wrapper">
-              <div className="audio__time">00:00</div>
-              <input
-                type="range"
-                className="audio__progress--bar"
-                value={0}
-                max={204.048}
-                style={{
-                  background:
-                    "linear-gradient(to right, rgb(43, 217, 124) 0%, rgb(109, 120, 125) 0%)",
-                  "--range-progress": "0%",
-                }}
-              ></input>
-              <div className="audio__time">03:23</div>
             </div>
           </div>
         </div>

@@ -52,17 +52,6 @@ export default function AudiobookPlayer({
         className:
           'w-40 aspect-[2/3] mx-auto mb-4 bg-gray-100 rounded overflow-hidden flex items-center justify-center',
       },
-      coverUrl
-        ? React.createElement('img', {
-            src: coverUrl,
-            alt: title,
-            className: 'w-full h-full object-cover',
-          })
-        : React.createElement(
-            'span',
-            { className: 'text-gray-400 text-sm' },
-            'No Cover',
-          ),
     ),
     React.createElement(
       'h2',
@@ -103,19 +92,6 @@ export default function AudiobookPlayer({
           className: 'px-4 py-2 bg-blue-600 text-white rounded-lg font-medium',
         },
         playing ? 'Pause' : 'Play',
-      ),
-      React.createElement(
-        'select',
-        {
-          value: playbackRate,
-          onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
-            setPlaybackRate(parseFloat(event.target.value)),
-          className: 'border rounded-lg px-2 py-1 text-sm',
-        },
-        React.createElement('option', { value: 1 }, '1.0x'),
-        React.createElement('option', { value: 1.25 }, '1.25x'),
-        React.createElement('option', { value: 1.5 }, '1.5x'),
-        React.createElement('option', { value: 2 }, '2.0x'),
       ),
     ),
     chapters.length > 0
