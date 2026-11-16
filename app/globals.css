@@ -1483,11 +1483,13 @@ button:disabled {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  padding: 8px;
 }
 
 .form-group label {
   margin-bottom: 0.4rem;
   font-weight: 500;
+  padding: 8px;
 }
 
 .form-group input {
@@ -1501,5 +1503,9 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 
