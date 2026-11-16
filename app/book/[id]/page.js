@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from 'next/link';
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdSearch } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -267,18 +268,24 @@ export default function BookIdPage({ params }) {
                       </div>
                     </div>
                     <div className="inner-book__read--btn-wrapper">
-                      <button className="inner-book__read--btn">
+                      <Link 
+                        href={`/player/${item.id}`}
+                        className="inner-book__read--btn"
+                        >
                         <div className="inner-book__read--icon">
                           <SlBookOpen />
                         </div>
                         <div className="inner-book__read--text">Read</div>
-                      </button>
-                      <button className="inner-book__read--btn">
+                      </Link>
+                      <Link 
+                        href={`/player/${item.id}`}
+                        className="inner-book__read--btn"
+                        >
                         <div className="inner-book__read--icon">
                           <HiOutlineMicrophone />
                         </div>
                         <div className="inner-book__read--text">Listen</div>
-                      </button>
+                      </Link>
                     </div>
                     <div className="inner-book__bookmark">
                       <div className="inner-book__bookmark-icon">

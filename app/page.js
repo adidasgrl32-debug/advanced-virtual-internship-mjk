@@ -1,9 +1,12 @@
+"use client" 
+
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillAudio, AiFillBulb, AiFillFileText } from "react-icons/ai";
 import { BiCrown } from "react-icons/bi";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { RiLeafLine } from "react-icons/ri";
+import LoginTrigger from "./components/LoginTrigger";
 
 export default function Home() {
   return (
@@ -45,7 +48,7 @@ export default function Home() {
                   <br className="remove--tablet" />
                   and even people who don’t like to read.
                 </div>
-                <button className="btn home__cta--btn">Login</button>
+                 <LoginTrigger />
               </div>
               <figure className="landing__image--mask">
                 <img src="/landing.png" alt="landing" />
