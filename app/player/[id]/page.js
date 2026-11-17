@@ -9,12 +9,11 @@ import { FaHighlighter } from "react-icons/fa6";
 import { MdHelpOutline } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
-import React, { useEffect, useState, use } from "react";
-import Skeleton from "react-loading-skeleton";
+import React, { useEffect, useState, use, Suspense } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
-import AudiobookPlayer from "../../components/AudiobookPlayer";
+import { useAudioPlayerContext } from "../../context/AudioPlayerContext";
 
-export default function PlayerPage({ params }) {
+export default function PlayerPage({ params, tracks }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,6 +21,10 @@ export default function PlayerPage({ params }) {
   const [searchResults, setSearchResults] = useState([]);
   const { id } = use(params);
 
+  const context = useAudioPlayerContext() || {};
+  const { audioRef } = context;
+  const duration = audioRef?.current?.duration;
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -60,6 +63,17 @@ export default function PlayerPage({ params }) {
   if (error) return <p>Error: {error}</p>;
 
   const skeletonItems = Array.from({ length: 4 });
+
+    const formatTime = (time) => {
+    if (typeof time === "number" && !isNaN(time)) {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60);
+      const formatMinutes = minutes.toString().padStart(2, "0");
+      const formatSeconds = seconds.toString().padStart(2, "0");
+      return `${formatMinutes}:${formatSeconds}`;
+    }
+    return "00:00";
+  };
 
   return (
     <div className="wrapper">
@@ -297,16 +311,16 @@ export default function PlayerPage({ params }) {
             <div className="audio__book--summary-text">{item.summary}</div>
           </div>
           <div className="audio__wrapper">
-            <div className="audio__track--details">
-                <div className="audio__track--title">{item.title}</div>
-                <div className="audio__track--author">{item.author}</div>
-              </div>
-            <AudiobookPlayer />
-              <audio src={item.audioLink} controls />
-            <figure className="audio__track--image-mask">
+            {tracks?.map((currentTrack) => (
+              <div key={currentTrack.id}>
+            <audio src={currentTrack.src} />
+            </div>
+             ))}
+            <div className="audio__track--wrapper">
+             <figure className="audio__track--image-mask">
                 <figure
                   className="book__image--wrapper"
-                  style={{ height: "50px", width: "50px", minWidth: "50px" }}
+                  style={{ height: "48px", width: "48px", minWidth: "48px" }}
                 >
                   <img
                     className="book__image"
@@ -315,11 +329,45 @@ export default function PlayerPage({ params }) {
                   />
                 </figure>
               </figure>
+              <Suspense fallback={<p>Loading player data...</p>}>
+            <div className="audio__track--details">
+                <div className="audio__track--title">{item.title}</div>
+                <div className="audio__track--author">{item.author}</div>
+              </div>
+              </Suspense>
             </div>
+            <div className="audio__controls--wrapper">
+              <div className="audio__controls">
+                <button className="audio__controls--btn">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#000" strokeWidth="2" d="M3.11111111,7.55555556 C4.66955145,4.26701301 8.0700311,2 12,2 C17.5228475,2 22,6.4771525 22,12 C22,17.5228475 17.5228475,22 12,22 L12,22 C6.4771525,22 2,17.5228475 2,12 M2,4 L2,8 L6,8 M9,16 L9,9 L7,9.53333333 M17,12 C17,10 15.9999999,8.5 14.5,8.5 C13.0000001,8.5 12,10 12,12 C12,14 13,15.5000001 14.5,15.5 C16,15.4999999 17,14 17,12 Z M14.5,8.5 C16.9253741,8.5 17,11 17,12 C17,13 17,15.5 14.5,15.5 C12,15.5 12,13 12,12 C12,11 12.059,8.5 14.5,8.5 Z"></path></svg>
+                </button>
+                <button className="audio__controls--btn audio__controls--btn-play">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" className="audio__controls--play-icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M96 448l320-192L96 64v384z"></path></svg>
+                </button>
+                <button className="audio__controls--btn">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#000" strokeWidth="2" d="M20.8888889,7.55555556 C19.3304485,4.26701301 15.9299689,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 L12,22 C17.5228475,22 22,17.5228475 22,12 M22,4 L22,8 L18,8 M9,16 L9,9 L7,9.53333333 M17,12 C17,10 15.9999999,8.5 14.5,8.5 C13.0000001,8.5 12,10 12,12 C12,14 13,15.5000001 14.5,15.5 C16,15.4999999 17,14 17,12 Z M14.5,8.5 C16.9253741,8.5 17,11 17,12 C17,13 17,15.5 14.5,15.5 C12,15.5 12,13 12,12 C12,11 12.059,8.5 14.5,8.5 Z"></path></svg>
+                </button>
+              </div>
+            </div>
+            <div className="audio__progress--wrapper">
+              <div className="audio__time">{formatTime(duration)}</div>
+                <input
+                  type="range"
+                  className="audio__progress--bar"
+                  value={0} readOnly
+                  max={204.048}
+                  style={{
+                    background: "linear-gradient(to right, rgb(43, 217, 124) 0%, rgb(109, 120, 125) 0%)",
+                    "--range-progress": "0%",
+                  }}
+                />
+                <div className="audio__time">{formatTime(duration)}</div>
+            </div>
+          </div>
         </div>
       ))}
-              </>
-            )}
+      </>
+    )}
     </div>
   );
 }

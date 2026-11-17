@@ -23,6 +23,7 @@ export default function ForYouPage() {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -224,9 +225,11 @@ export default function ForYouPage() {
                 <div className="sidebar__link--wrapper">
                   <div className="sidebar__link--line" />
                   <div className="sidebar__icon--wrapper" />
-                  <div className="sidebar__link--text">
-                    <MdLogin /> Login
-                  </div>
+                  <div
+                    className="sidebar__link--text"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    <MdLogin /> Login</div>
                 </div>
               </div>
             </div>

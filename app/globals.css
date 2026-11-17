@@ -1312,7 +1312,7 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #042330;
+  background-color: rgb(4, 35, 48);
   padding: 0 40px;
   position: fixed;
   bottom: 0;
@@ -1325,8 +1325,8 @@ button:disabled {
   height: 54px;
 }
 
-.audio__wrapper>div {
-  width: calc(100% / 3)
+.audio__wrapper> div {
+  width: calc(33.3333%);
 }
 
 .audio__track--wrapper {
@@ -1354,24 +1354,73 @@ button:disabled {
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
   justify-content: center;
-  align-items: center;
+  gap: 4px;
 }
 
 .audio__track--author {
   color: rgb(186, 200, 206);
 }
 
-.audio__controls {
+.audio__track--title {
+  color: #fff;
+}
+
+.audio__controls, .audio__controls--btn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.book__image {
+.audio__controls {
+  gap: 24px;
+}
+
+.audio__controls--btn {
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.audio__controls--btn svg {
+  width: 28px;
+  height: 28px;
+  stroke: rgb(255, 255, 255);
+  transition: .02s;
+}
+
+.audio__controls--btn-play {
+  background-color: rgb(255, 255, 255);
+  width: 40px;
+  height: 40px;
+}
+
+.audio__controls--btn-play svg {
+  color: rgb(4, 35, 48);
+}
+
+.audio__controls--play--icon {
+  margin-left: 4px;
+}
+
+.audio__progress--wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.audio__time {
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+
+.audio__progress--bar {
+  height: 4px;
+  max-width: 300px;
   width: 100%;
-  height: 100%;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 8px;
+  outline: none;
 }
 
 @media (max-width: 768px) {
@@ -1389,7 +1438,7 @@ button:disabled {
     padding: 16px 24px;
     flex-direction: column;
   }
-  .audio__wrapper>div {
+  .audio__wrapper> div {
     width: 100%;
     justify-content: center;
   }
