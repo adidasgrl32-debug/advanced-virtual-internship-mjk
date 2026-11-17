@@ -10,6 +10,8 @@ import { MdHelpOutline } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import React, { useEffect, useState, use } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import AudiobookPlayer from "../../components/AudiobookPlayer";
 
 export default function PlayerPage({ params }) {
@@ -56,6 +58,8 @@ export default function PlayerPage({ params }) {
   }, [search]);
 
   if (error) return <p>Error: {error}</p>;
+
+  const skeletonItems = Array.from({ length: 4 });
 
   return (
     <div className="wrapper">
@@ -126,6 +130,26 @@ export default function PlayerPage({ params }) {
         </div>
       </div>
 
+            {isLoading ? (
+              skeletonItems.map((_, index) => (
+                <div className="row" key={index}>
+                    <div
+                className="skeleton"
+                style={{ width: "48px", height: "48px" }}
+              ></div>
+                   <div
+                className="skeleton"
+                style={{ width: "50px", height: "16px", marginBottom: "8px" }}
+              ></div>
+                   <div
+                className="skeleton"
+                style={{ width: "100px", height: "16px" }}
+              ></div>
+                </div>
+              ))
+            ) : (
+              <>
+
       <div className="sidebar__overlay sidebar__overlay--hidden"></div>
       <div className="sidebar sidebar--closed">
         <div className="sidebar__logo">
@@ -150,14 +174,14 @@ export default function PlayerPage({ params }) {
               <div className="sidebar__link--line active--tab" />
               <div className="sidebar__icon--wrapper" />
               <div className="sidebar__link--text">
-                <FaRegBookmark /> My Library
+                <FaRegBookmark className="w-6 h-6" /> My Library
               </div>
             </a>
             <div className="sidebar__link--wrapper sidebar__link--not-allowed">
               <div className="sidebar__link--line" />
               <div className="sidebar__icon--wrapper" />
               <div className="sidebar__link--text">
-                <FaHighlighter /> Highlights
+                <FaHighlighter className="w-6 h-6" /> Highlights
               </div>
             </div>
             <div className="sidebar__link--wrapper sidebar__link--not-allowed">
@@ -294,6 +318,8 @@ export default function PlayerPage({ params }) {
             </div>
         </div>
       ))}
+              </>
+            )}
     </div>
   );
 }
