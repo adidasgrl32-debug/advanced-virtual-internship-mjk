@@ -6,8 +6,8 @@ import { AiFillAudio, AiFillBulb, AiFillFileText } from "react-icons/ai";
 import { BiCrown } from "react-icons/bi";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { RiLeafLine } from "react-icons/ri";
-import { AuthModal } from "./components/AuthModal";
 import { useState } from "react";
+import AuthModal from "./components/AuthModal";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState();
@@ -52,12 +52,7 @@ export default function Home() {
                   and even people who don’t like to read.
                 </div>
                 <div className="landing__btn--wrapper">
-                  <AuthModal 
-                    isOpen={isOpen} 
-                     onClose={() => setIsOpen(false)} 
-                  />
-                  <button className="btn home__cta--btn">Login
-                </button>
+                  <AuthModal className="btn home__cta--btn"/>
             </div>
               </div>
               <figure className="landing__image--mask">
