@@ -82,18 +82,6 @@ export default function AudiobookPlayer({
         style: { width: `${progress}%` },
       }),
     ),
-    React.createElement(
-      'div',
-      { className: 'flex items-center justify-between gap-4 mb-6' },
-      React.createElement(
-        'button',
-        {
-          onClick: () => setPlaying(!playing),
-          className: 'px-4 py-2 bg-blue-600 text-white rounded-lg font-medium',
-        },
-        playing ? 'Pause' : 'Play',
-      ),
-    ),
     chapters.length > 0
       ? React.createElement(
           'div',

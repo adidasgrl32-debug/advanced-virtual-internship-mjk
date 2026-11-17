@@ -6,7 +6,7 @@ import { IoMdSearch } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaHighlighter } from "react-icons/fa6";
-import { MdHelpOutline, MdLogin } from "react-icons/md";
+import { MdHelpOutline } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import React, { useEffect, useState, use } from "react";
@@ -137,7 +137,7 @@ export default function PlayerPage({ params }) {
             priority
           />
         </div>
-        <div className="sidebar__wrapper">
+        <div className="sidebar__wrapper" style={{ height: "calc(-140px + 100vh)" }}>
           <div className="sidebar__top">
             <a className="sidebar__link--wrapper" href="/for-you">
               <div className="sidebar__link--line active--tab" />
@@ -146,7 +146,7 @@ export default function PlayerPage({ params }) {
                 <AiOutlineHome className="w-6 h-6" /> For you
               </div>
             </a>
-            <a className="sidebar__link--wrapper" href="/for-you">
+            <a className="sidebar__link--wrapper sidebar__link--not-allowed">
               <div className="sidebar__link--line active--tab" />
               <div className="sidebar__icon--wrapper" />
               <div className="sidebar__link--text">
@@ -256,14 +256,15 @@ export default function PlayerPage({ params }) {
                 </div>
                 <div className="sidebar__link--wrapper">
                   <div className="sidebar__link--line" />
-                  <div className="sidebar__icon--wrapper" />
+                  <div className="sidebar__icon--wrapper">
+                    <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                  </div>
                   <div className="sidebar__link--text">
-                    <MdLogin /> Login
+                    Logout</div> 
                   </div>
                 </div>
               </div>
             </div>
-          </div>
           
       {data?.map?.((item, index) => (
         <div key={index} className="summary">
@@ -271,44 +272,26 @@ export default function PlayerPage({ params }) {
             <div className="audio__book--summary-title">{item.title}</div>
             <div className="audio__book--summary-text">{item.summary}</div>
           </div>
-          <div className="audio__book--spinner">
-            <svg>spinner</svg>
-          </div>
           <div className="audio__wrapper">
+            <div className="audio__track--details">
+                <div className="audio__track--title">{item.title}</div>
+                <div className="audio__track--author">{item.author}</div>
+              </div>
             <AudiobookPlayer />
-            <audio src={item.audioLink} controls />
-            <div className="audio__track--wrapper">
-              <figure className="audio__track--image-mask">
+              <audio src={item.audioLink} controls />
+            <figure className="audio__track--image-mask">
                 <figure
                   className="book__image--wrapper"
-                  style={{ height: "48px", width: "48px", minWidth: "48px" }}
+                  style={{ height: "50px", width: "50px", minWidth: "50px" }}
                 >
                   <img
                     className="book__image"
                     src={item.imageLink}
                     alt="book"
-                    style={{ diplay: "block" }}
                   />
-                  <div
-                    className="skeleton"
-                    style={{ width: "48px", height: "48px" }}
-                  ></div>
                 </figure>
               </figure>
-              <div className="audio__track--details-wrapper">
-                <div
-                  className="skeleton"
-                  style={{ width: "50px", height: "16px", marginBottom: "8px" }}
-                ></div>
-                <div className="audio__track--title">{item.title}</div>
-                <div
-                  className="skeleton"
-                  style={{ width: "100px", height: "16px" }}
-                ></div>
-                <div className="audio__track--author">{item.author}</div>
-              </div>
             </div>
-          </div>
         </div>
       ))}
     </div>

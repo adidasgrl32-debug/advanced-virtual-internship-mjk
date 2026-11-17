@@ -6,14 +6,11 @@ import { AiFillAudio, AiFillBulb, AiFillFileText } from "react-icons/ai";
 import { BiCrown } from "react-icons/bi";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { RiLeafLine } from "react-icons/ri";
+import { AuthModal } from "./components/AuthModal";
 import { useState } from "react";
-import { useAuth } from "./context/AuthContext";
-import LoginModal from "./components/LoginModal";
-import LoginTrigger from "./components/LoginTrigger";
 
 export default function Home() {
-  const { user, loading, logout } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState();
 
   return (
     <>
@@ -54,34 +51,14 @@ export default function Home() {
                   <br className="remove--tablet" />
                   and even people who don’t like to read.
                 </div>
-          {!loading && (
-            <div>
-              <LoginTrigger>
-                {user ? (
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm">{user.email}</span>
-                    <button
-                      onClick={logout}
-                      className="rounded bg-zinc-200 px-3 py-1.5 text-sm dark:bg-zinc-800"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="rounded bg-blue-600 px-4 py-1.5 text-sm text-white"
-                  >
-                    Sign In
-                  </button>
-                )}
-              </LoginTrigger>
+                <div className="landing__btn--wrapper">
+                  <AuthModal 
+                    isOpen={isOpen} 
+                     onClose={() => setIsOpen(false)} 
+                  />
+                  <button className="btn home__cta--btn">Login
+                </button>
             </div>
-          )}
-          <LoginModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
               </div>
               <figure className="landing__image--mask">
                 <img src="/landing.png" alt="landing" />
