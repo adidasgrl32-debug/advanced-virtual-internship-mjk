@@ -111,7 +111,7 @@ export default function AuthModal() {
           <button onClick={handleSignOut}>Sign Out</button>
         </div>
       ) : (
-        <button onClick={() => setIsModalOpen(true)}>Login</button>
+        <button onClick={() => setIsModalOpen(true)}>Sign In</button>
       )}
 
       {isModalOpen && (

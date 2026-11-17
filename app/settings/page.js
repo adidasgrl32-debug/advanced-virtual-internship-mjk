@@ -189,6 +189,20 @@ export default function SettingsPage() {
             </div>
           </div>
         </div>
+        <div className="container">
+          <div className="row">
+            <div className="section__title page__title">Settings</div>
+            <div className="setting__content">
+              <div className="settings__sub--title">Your Subscription plan</div>
+              <div className="settings__text">Basic</div>
+                <a className="btn settings__upgrade--btn" href="/choose-plan">Upgrade to premium</a>
+            </div>
+            <div className="setting__content">
+              <div className="settings__sub--title">Email</div>
+              <div className="settings__text">email address</div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

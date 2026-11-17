@@ -10,7 +10,7 @@ import { useState } from "react";
 import AuthModal from "./components/AuthModal";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
@@ -52,7 +52,14 @@ export default function Home() {
                   and even people who don’t like to read.
                 </div>
                 <div className="landing__btn--wrapper">
-                  <AuthModal className="btn home__cta--btn"/>
+                 <button 
+                    onClick={() => setIsModalOpen(true)}
+                    className="btn home__cta--btn">
+                    Login
+                 </button>
+                 {isModalOpen && (
+                  <AuthModal onClose={() => setIsModalOpen(false)} />
+                 )}
             </div>
               </div>
               <figure className="landing__image--mask">
