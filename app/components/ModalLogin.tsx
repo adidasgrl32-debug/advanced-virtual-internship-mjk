@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { BsPerson } from "react-icons/bs";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../lib/firebase";
 
 interface ModalLoginProps {
   isOpen: boolean;
@@ -12,8 +14,20 @@ interface ModalLoginProps {
 export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
   const [isResetyourpasswordModalOpen, setIsResetyourpasswordModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  if (!isOpen) return null;
+const handleLogin = async () => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    window.location.href = "/for-you";
+  } catch (error) {
+    console.error("Login failed:", error);
+    alert("Login failed. Check your email and password.");
+  }
+};
+
+if (!isOpen) return null;
 
   return (
     <>
@@ -69,13 +83,13 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
                   <form className="auth__main--form">
                     <input
                       className="auth__main--input"
-                      type="text"
+                      type="email"
                       placeholder="Email Address"
-                    />
-                    <input
-                      className="auth__main--input"
-                      type="password"
-                      placeholder="Password"
+                      />
+                  <input
+                    className="auth__main--input"
+                    type="password"
+                    placeholder="Password"
                     />
                     <button
                       type="button"
@@ -131,21 +145,21 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
                     <span className="auth__separator--text">or</span>
                   </div>
                   <form className="auth__main--form">
-                    <input
-                      className="auth__main--input"
-                      type="text"
-                      placeholder="Email Address"
+                  <input
+                    className="auth__main--input"
+                    type="email"
+                    placeholder="Email Address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <input
+                    className="auth__main--input"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     />
-                    <input
-                      className="auth__main--input"
-                      type="password"
-                      placeholder="Password"
-                    />
-                    <button
-                      type="button"
-                      className="btn"
-                      onClick={() => (window.location.href = "/for-you")}
-                    >
+                    <button type="button" className="btn" onClick={handleLogin}>
                       <span>Login</span>
                     </button>
                   </form>

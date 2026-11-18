@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../lib/firebase";
+import { getPremiumStatus } from "../account/getpremiumstatus";
+import { getCheckoutUrl } from "../account/stripePayment";
 
 export default function choosePlanPage() {
   const [selectedPlan, setSelectedPlan] = useState("yearly");
@@ -39,9 +41,21 @@ export default function choosePlanPage() {
     return <div className="p-8">Loading account details...</div>;
   }
 
-  if (!user) {
-    return <div className="p-8">Please log in to view your account.</div>;
+  const handleCheckout = async () => {
+  try {
+    const priceId =
+      selectedPlan === "yearly"
+        ? "price_1UdESr8X5N6qFuVwAAtYzUd5"
+        : "price_1UdEbr8X5N6qFuVwb3Ax6sQO";
+
+    const checkoutUrl = await getCheckoutUrl(app, priceId);
+    console.log("Firebase user:", getAuth(app).currentUser);
+
+    window.location.href = checkoutUrl;
+  } catch (error) {
+    console.error("Checkout error:", error);
   }
+};
 
   return (
     <div id="__next">
@@ -159,7 +173,7 @@ export default function choosePlanPage() {
               }}
             >
               <span className="btn--wrapper">
-                <button
+                <button onClick={handleCheckout}
                   type="button"
                   className="btn"
                   style={{ width: "300px" }}
