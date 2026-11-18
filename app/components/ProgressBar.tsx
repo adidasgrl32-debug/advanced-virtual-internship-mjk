@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useAudioPlayerContext } from "../context/AudioPlayerContext";
 
 export const ProgressBar = () => {

@@ -9,9 +9,10 @@ import { FaHighlighter } from "react-icons/fa6";
 import { MdHelpOutline } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
-import React, { useEffect, useState, use, Suspense } from "react";
+import React, { useEffect, useState, Suspense, use } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useParams } from "next/navigation";
+import ModalLogin from "../../components/ModalLogin";
 
 export default function PlayerPage() {
   const [data, setData] = useState([]);
@@ -21,6 +22,10 @@ export default function PlayerPage() {
   const [searchResults, setSearchResults] = useState([]);
   const { id } = useParams();
   const params = useParams();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+    
+  <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
   
 const audioRef = React.useRef(null);
 const [isPlaying, setIsPlaying] = useState(false);
@@ -322,8 +327,10 @@ const skipForward = () => {
                   <div className="sidebar__icon--wrapper">
                     <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                   </div>
-                  <div className="sidebar__link--text">
-                    Logout</div> 
+              <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                <div className="sidebar__link--text" onClick={() => setIsModalOpen(true)}>
+                  Logout
+                </div>
                   </div>
                 </div>
               </div>

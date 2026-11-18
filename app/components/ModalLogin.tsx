@@ -1,17 +1,23 @@
 "use client"
 
+import React, { useState } from "react";
 import Image from "next/image";
-import { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 
-export default function ModalLogin() {
-const [isModalOpen, setIsModalOpen] = useState(false);
-const [isResetyourpasswordModalOpen, setIsResetyourpasswordModalOpen] = useState(false);
-const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+interface ModalLoginProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
+  const [isResetyourpasswordModalOpen, setIsResetyourpasswordModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+
+  if (!isOpen) return null;
 
   return (
     <>
-      {isModalOpen && (
+      {isOpen && (
         <div className="auth__wrapper">
           <div className="auth">
             {isResetyourpasswordModalOpen ? (
@@ -165,7 +171,7 @@ const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
             <button
               type="button"
               onClick={() => {
-                setIsModalOpen(false);
+                onClose();
                 setIsResetyourpasswordModalOpen(false);
                 setIsSignupModalOpen(false);
               }}

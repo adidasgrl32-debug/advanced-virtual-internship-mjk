@@ -14,6 +14,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ModalLogin from "../components/ModalLogin";
 
 export default function ForYouPage() {
   const [selectedBooks, setSelectedBooks] = useState([]);
@@ -25,6 +26,8 @@ export default function ForYouPage() {
   const [searchResults, setSearchResults] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+  
   useEffect(() => {
     Promise.all([
       axios.get(
@@ -225,11 +228,10 @@ export default function ForYouPage() {
                 <div className="sidebar__link--wrapper">
                   <div className="sidebar__link--line" />
                   <div className="sidebar__icon--wrapper" />
-                  <div
-                    className="sidebar__link--text"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    <MdLogin /> Login</div>
+      <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                <div className="sidebar__link--text" onClick={() => setIsModalOpen(true)}>
+                    <MdLogin /> Login
+                </div>
                 </div>
               </div>
             </div>

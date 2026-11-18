@@ -16,6 +16,8 @@ import React, { useEffect, useState, use } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useRouter } from 'next/navigation';
+import ModalLogin from "../../components/ModalLogin";
+
 
 export default function BookIdPage({ params }) {
   const [data, setData] = useState([]);
@@ -26,6 +28,9 @@ export default function BookIdPage({ params }) {
   const { id } = use(params);
   const router = useRouter();
   const [duration, setDuration] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
   const formatTime = (time) => {
     if (typeof time === "number" && !isNaN(time)) {
@@ -233,9 +238,10 @@ export default function BookIdPage({ params }) {
                 <div className="sidebar__link--wrapper">
                   <div className="sidebar__link--line" />
                   <div className="sidebar__icon--wrapper" />
-                  <div className="sidebar__link--text">
-                    <MdLogin /> Login
-                  </div>
+                  <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                    <div className="sidebar__link--text" onClick={() => setIsModalOpen(true)}>
+                        <MdLogin /> Login
+                    </div>
                 </div>
               </div>
             </div>

@@ -6,15 +6,30 @@ import { IoMdSearch } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaHighlighter } from "react-icons/fa6";
-import { MdHelpOutline, MdLogin } from "react-icons/md";
+import { MdHelpOutline } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../lib/firebase";
+import ModalLogin from "../components/ModalLogin";
 
 export default function SettingsPage() {
   const [search, setSearch] = useState("");
   const [error, setError] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (!search.trim()) {
@@ -40,7 +55,17 @@ export default function SettingsPage() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  if (error) return <p>Error: {error}</p>;
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -73,7 +98,9 @@ export default function SettingsPage() {
 
             {search && (
               <div className="search__books--wrapper">
-                {searchResults.length === 0 ? (
+                {error ? (
+                  <div className="search__book--link">Error: {error}</div>
+                ) : searchResults.length === 0 ? (
                   <div className="search__book--link">No books found</div>
                 ) : (
                   searchResults.map((book) => (
@@ -167,43 +194,66 @@ export default function SettingsPage() {
                   <MdHelpOutline className="w-6 h-6" /> Help & Support
                 </div>
               </div>
-              <div className="sidebar__link--wrapper">
-                <div className="sidebar__link--line" />
-                <div className="sidebar__icon--wrapper" />
-                <div className="sidebar__link--text">
-                  <MdLogin /> Login
+              {!user && (
+                <div className="sidebar__link--wrapper">
+                  <div className="sidebar__link--line" />
+                  <div className="sidebar__icon--wrapper" />
+                  <div
+                    className="sidebar__link--text"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Login
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {user ? (
+          <section className="logged-in-section">
+          <div className="container">
+            <div className="row">
+              <div className="section__title page__title">Settings</div>
+              <div className="setting__content">
+                <div className="settings__sub--title">
+                  Your Subscription plan
+                </div>
+                <div className="settings__text">Basic</div>
+                <a className="btn settings__upgrade--btn" href="/choose-plan">
+                  Upgrade to premium
+                </a>
+              </div>
+              <div className="setting__content">
+                <div className="settings__sub--title">Email</div>
+                <div className="settings__text">{user.email}</div>
+              </div>
+            </div>
+          </div>
+          </section>
+        ) : (
+          <section className="logged-out-section">
+            <div className="container">
+              <div className="row">
+                <div className="section__title page__title">Settings</div>
+                <div className="settings__login--wrapper">
+                  <img alt="login" src="/login.png" />
+                  <div className="settings__login--text">
+                    Log in to your account to see your details.
+                  </div>
+                  <button
+                    className="btn settings__login--btn"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Login
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="section__title page__title">Settings</div>
-            <div className="settings__login--wrapper">
-              <img alt="login" src="/login.png" />
-              <div className="settings__login--text">
-                Log in to your account to see your details.
-              </div>
-              <button className="btn settings__login--btn">Login</button>
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="section__title page__title">Settings</div>
-            <div className="setting__content">
-              <div className="settings__sub--title">Your Subscription plan</div>
-              <div className="settings__text">Basic</div>
-                <a className="btn settings__upgrade--btn" href="/choose-plan">Upgrade to premium</a>
-            </div>
-            <div className="setting__content">
-              <div className="settings__sub--title">Email</div>
-              <div className="settings__text">email address</div>
-            </div>
-          </div>
-        </div>
+          </section>
+        )}
       </div>
+      <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 }

@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { RiMenuAddLine } from 'react-icons/ri';
 import { TrackInfo } from './TrackInfo';
 import { Controls } from './Controls';

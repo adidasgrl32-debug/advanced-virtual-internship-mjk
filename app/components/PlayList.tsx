@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import { useAudioPlayerContext } from "../context/AudioPlayerContext";
 import { tracks } from "../data/tracks";
@@ -8,19 +9,19 @@ export const PlayList = () => {
   const { currentTrack, setCurrentTrack, setIsPlaying } =
     useAudioPlayerContext();
 
-  const handleClick = (track: (typeof tracks)[number]) => {
+  const handleClick = (track: any) => {
     setCurrentTrack(track);
     setIsPlaying(true);
   };
 
   return (
     <ul className="bg-[#4c4848] text-white max-h-72 overflow-y-auto">
-      {tracks.map((track, index) => (
+      {tracks.map((track: any, index) => (
         <li
           key={index}
           onClick={() => handleClick(track)}
           className={`flex items-center gap-3 p-[0.5rem_10px] cursor-pointer ${
-            currentTrack?.title === track.title ? "bg-[#a66646]" : ""
+            currentTrack === track ? "bg-[#a66646]" : ""
           }`}
         >
           <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded-sm overflow-hidden">
