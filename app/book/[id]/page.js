@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from 'next/link';
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdSearch } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -13,17 +12,29 @@ import { HiOutlineMicrophone, HiOutlineLightBulb } from "react-icons/hi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { SlBookOpen } from "react-icons/sl";
 import axios from "axios";
-import React, { useEffect, useState, use } from "react";
+import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useRouter } from 'next/navigation';
+import { useParams } from "next/navigation";
 
-export default function BookIdPage({ params }) {
+export default function BookIdPage() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { id } = use(params);
+  const { id } = useParams;
+  const router = useRouter();
+
+
+  const handleClick = (item) => {
+    if (item.subscriptionRequired) {
+      router.push("/choose-plan");
+    } else {
+      router.push(`/player/${id}`);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -268,24 +279,24 @@ export default function BookIdPage({ params }) {
                       </div>
                     </div>
                     <div className="inner-book__read--btn-wrapper">
-                      <Link 
-                        href={`/player/${item.id}`}
+                      <button
+                        onClick={() => handleClick(item)}
                         className="inner-book__read--btn"
                         >
                         <div className="inner-book__read--icon">
                           <SlBookOpen />
                         </div>
                         <div className="inner-book__read--text">Read</div>
-                      </Link>
-                      <Link 
-                        href={`/player/${item.id}`}
+                      </button>
+                      <button
+                        onClick={() => handleClick(item)}
                         className="inner-book__read--btn"
                         >
                         <div className="inner-book__read--icon">
                           <HiOutlineMicrophone />
                         </div>
                         <div className="inner-book__read--text">Listen</div>
-                      </Link>
+                      </button>
                     </div>
                     <div className="inner-book__bookmark">
                       <div className="inner-book__bookmark-icon">

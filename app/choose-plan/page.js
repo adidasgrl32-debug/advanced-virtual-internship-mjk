@@ -1,8 +1,11 @@
 "use client"
 
 import Image from "next/image";
+import { useState } from "react";
 
 export default function choosePlanPage() {
+  const [selectedPlan, setSelectedPlan] = useState("yearly");
+
   return (
     <div id="__next">
       <div className="wrapper wrapper__full">
@@ -49,35 +52,95 @@ export default function choosePlanPage() {
             </div>
           </div>
           <div className="section__title">Choose the plan that fits you</div>
-          <div className="plan__card plan__card--active">
-            <div className="plan__card--circle">
-              <div className="plan__card--dot"></div>
+            <div
+              onClick={() => setSelectedPlan("yearly")}
+              className={`plan__card ${
+                selectedPlan === "yearly" ? "plan__card--active" : ""
+              }`}
+              style={{
+                border:
+                  selectedPlan === "yearly"
+                    ? "4px solid #2bd97c"
+                    : "4px solid #bac8ce",
+                cursor: "pointer",
+              }}
+            >
+              <div className="plan__card--circle">
+                {selectedPlan === "yearly" && (
+                  <div className="plan__card--dot" />
+                )}
+              </div>
+              <div className="plan__card--content">
+                <div className="plan__card--title">Premium Plus Yearly</div>
+                <div className="plan__card--price">$99.99/year</div>
+                <div className="plan__card--text">
+                  7-day free trial included
+                </div>
+              </div>
             </div>
-            <div className="plan__card--content">
-              <div className="plan__card--title">Premium Plus Yearly</div>
-              <div className="plan__card--price">$99.99/year</div>
-              <div className="plan__card--text">7-day free trial included</div>
+
+            <div className="plan__card--separator">
+              <div className="plan__separator">or</div>
             </div>
-          </div>
-          <div className="plan__card--separator">
-            <div className="plan__separator">or</div>
-          </div>
-            <div className="plan__card">
-            <div className="plan__card--circle"></div>
-            <div className="plan__card--content">
-              <div className="plan card--title">Premium Monthly</div>
-              <div className="plan__card--price">$9.99/year</div>
-              <div className="plan__card--text">No trial included</div>
+
+            <div
+              onClick={() => setSelectedPlan("monthly")}
+              className={`plan__card ${
+                selectedPlan === "monthly" ? "plan__card--active" : ""
+              }`}
+              style={{
+                border:
+                  selectedPlan === "monthly"
+                    ? "4px solid #2bd97c"
+                    : "4px solid #bac8ce",
+                cursor: "pointer",
+              }}
+            >
+              <div className="plan__card--circle">
+                {selectedPlan === "monthly" && (
+                  <div className="plan__card--dot" />
+                )}
+              </div>
+              <div className="plan__card--content">
+                <div className="plan__card--title">Premium Monthly</div>
+                <div className="plan__card--price">$9.99/month</div>
+                <div className="plan__card--text">No trial included</div>
+              </div>
             </div>
-          </div>
-            <div className="plan__card--cta">
+
+            <div
+              className="plan__card--cta"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "16px",
+                width: "100%",
+                margin: "32px auto",
+                textAlign: "center",
+              }}
+            >
               <span className="btn--wrapper">
-                <button className="btn" style={{ width: "300px" }}>
-                  <span>Start your free 7-day trial</span>
+                <button
+                  type="button"
+                  className="btn"
+                  style={{ width: "300px" }}
+                >
+                  <span>
+                    {selectedPlan === "yearly"
+                      ? "Start your free 7-day trial"
+                      : "Start your first month"}
+                  </span>
                 </button>
               </span>
-              <div className="plan__disclaimer">Cancel your trial at any time before it ends, and you won't be charged.</div>
+              <div className="plan__disclaimer">
+                {selectedPlan === "yearly"
+                  ? "Cancel your trial at any time before it ends, and you won’t be charged."
+                  : "30-day money back guarantee, no questions asked."}
+              </div>
             </div>
+            
             <div className="faq__wrapper">
               <div className="accordion__card">
               <div className="accordion__header">
