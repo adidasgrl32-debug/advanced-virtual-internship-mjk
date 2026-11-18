@@ -194,7 +194,7 @@ const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
           </div>
         </div>
       )}
-      
+
       <nav className="nav">
         <div className="nav__wrapper">
           <figure className="nav__img--mask">
