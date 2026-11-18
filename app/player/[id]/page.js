@@ -20,6 +20,7 @@ export default function PlayerPage() {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const { id } = useParams();
+  const params = useParams();
   
 const audioRef = React.useRef(null);
 const [isPlaying, setIsPlaying] = useState(false);
@@ -88,12 +89,12 @@ const skipForward = () => {
 
   const skeletonItems = Array.from({ length: 4 });
 
-    const formatTime = (time) => {
+  const formatTime = (time) => {
     if (typeof time === "number" && !isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time % 60);
-      const formatMinutes = minutes.toString().padStart(2, "0");
-      const formatSeconds = seconds.toString().padStart(2, "0");
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  const formatMinutes = minutes.toString().padStart(2, "0");
+  const formatSeconds = seconds.toString().padStart(2, "0");
       return `${formatMinutes}:${formatSeconds}`;
     }
     return "00:00";
