@@ -11,17 +11,17 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import React, { useEffect, useState, use, Suspense } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useAudioPlayerContext } from "../../context/AudioPlayerContext";
+import { useParams } from "next/navigation";
 
-export default function PlayerPage({ params, tracks }) {
+export default function PlayerPage() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { id } = use(params);
+  const { id } = useParams();
   
-  const audioRef = React.useRef(null);
+const audioRef = React.useRef(null);
 const [isPlaying, setIsPlaying] = useState(false);
 const [currentTime, setCurrentTime] = useState(0);
 const [duration, setDuration] = useState(0);
