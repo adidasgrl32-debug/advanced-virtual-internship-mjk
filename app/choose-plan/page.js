@@ -1,10 +1,47 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from "../lib/firebase";
 
 export default function choosePlanPage() {
   const [selectedPlan, setSelectedPlan] = useState("yearly");
+  const [user, setUser] = useState(null);
+  const [isPremium, setIsPremium] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const auth = getAuth(app);
+
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+
+      if (currentUser) {
+        try {
+          const status = await getPremiumStatus(app);
+          setIsPremium(status);
+        } catch (error) {
+          console.error("Error fetching premium status:", error);
+          setIsPremium(false);
+        }
+      } else {
+        setIsPremium(false);
+      }
+
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div className="p-8">Loading account details...</div>;
+  }
+
+  if (!user) {
+    return <div className="p-8">Please log in to view your account.</div>;
+  }
 
   return (
     <div id="__next">
