@@ -1,12 +1,16 @@
-import { BsMusicNoteBeamed } from 'react-icons/bs';
-import { useAudioPlayerContext } from '../context/AudioPlayerContext';
-import { tracks } from '../data/tracks';
+"use client";
+
+import { BsMusicNoteBeamed } from "react-icons/bs";
+import { useAudioPlayerContext } from "../context/AudioPlayerContext";
+import { tracks } from "../data/tracks";
 
 export const PlayList = () => {
-  const { currentTrack, setCurrentTrack } = useAudioPlayerContext();
+  const { currentTrack, setCurrentTrack, setIsPlaying } =
+    useAudioPlayerContext();
 
   const handleClick = (track: (typeof tracks)[number]) => {
     setCurrentTrack(track);
+    setIsPlaying(true);
   };
 
   return (
@@ -14,15 +18,20 @@ export const PlayList = () => {
       {tracks.map((track, index) => (
         <li
           key={index}
+          onClick={() => handleClick(track)}
           className={`flex items-center gap-3 p-[0.5rem_10px] cursor-pointer ${
-            currentTrack.title === track.title ? 'bg-[#a66646]' : ''
+            currentTrack?.title === track.title ? "bg-[#a66646]" : ""
           }`}
         >
           <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded-sm overflow-hidden">
             {track.thumbnail ? (
               <img
                 className="w-full h-full object-cover"
-                src={typeof track.thumbnail === 'string' ? track.thumbnail : track.thumbnail.src}
+                src={
+                  typeof track.thumbnail === "string"
+                    ? track.thumbnail
+                    : track.thumbnail.src
+                }
                 alt="audio avatar"
               />
             ) : (

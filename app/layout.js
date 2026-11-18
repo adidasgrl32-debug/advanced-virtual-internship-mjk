@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./client-layout";
-import { AudioPlayerProvider } from "./context/AudioPlayerContext";
+import { AudioPlayerProvider } from "./components/AudioPlayerProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
