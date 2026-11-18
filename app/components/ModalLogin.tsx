@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { BsPerson } from "react-icons/bs";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../lib/firebase";
 
 interface ModalLoginProps {
@@ -24,6 +24,15 @@ const handleLogin = async () => {
   } catch (error) {
     console.error("Login failed:", error);
     alert("Login failed. Check your email and password.");
+  }
+};
+
+const handleGoogleLogin = async () => {
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+    window.location.href = "/choose-plan";
+  } catch (error) {
+    console.error("Google login failed:", error);
   }
 };
 
@@ -94,7 +103,7 @@ if (!isOpen) return null;
                     <button
                       type="button"
                       className="btn"
-                      onClick={() => (window.location.href = "/for-you")}
+                      onClick={handleGoogleLogin}
                     >
                       <span>Sign up</span>
                     </button>
