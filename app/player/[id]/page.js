@@ -9,23 +9,17 @@ import { FaHighlighter } from "react-icons/fa6";
 import { MdHelpOutline } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
-import React, { useEffect, useState, Suspense, use } from "react";
+import React, { useEffect, useState, use, Suspense } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useParams } from "next/navigation";
 import ModalLogin from "../../components/ModalLogin";
 
-function PlayerDetails() {
-    const params = useParams();
-    return <div>Player ID: {params.id}</div>
-}
-
-export default function PlayerPage() {
+function PlayerContent({ params }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { id } = useParams();
+  const { id } = use(params);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
     
@@ -442,5 +436,12 @@ const skipForward = () => {
       </>
     )}
     </div>
+  );
+}
+export default function PlayerPage({ params }) {
+  return (
+    <Suspense fallback={<div>Loading player...</div>}>
+      <PlayerContent params={params} />
+    </Suspense>
   );
 }
