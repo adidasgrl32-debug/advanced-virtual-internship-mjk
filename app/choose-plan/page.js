@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../lib/firebase";
-import { getPremiumStatus } from "../account/getpremiumstatus";
 import { getCheckoutUrl } from "../account/stripePayment";
+import { getPremiumStatus } from "../account/getPremiumStatus";
 
 export default function choosePlanPage() {
   const [selectedPlan, setSelectedPlan] = useState("yearly");
