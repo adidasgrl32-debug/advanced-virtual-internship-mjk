@@ -684,6 +684,11 @@ button:disabled {
   transition: all .3s;
 }
 
+.sidebar--opened {
+  transform: translateX(0);
+  width: 50%;
+}
+
 .sidebar__logo {
   display: flex;
   align-items: center;
@@ -1198,7 +1203,7 @@ button:disabled {
     width: 100%;
   }
   .sidebar {
-    transform: translate(-100%);
+    transform: translateX(-100%);
   }
   .sidebar__toggle--btn {
     display: flex;
@@ -1945,5 +1950,11 @@ b {
   }
   .accordion__body {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 992px) {
+  .sidebar.sidebar--opened {
+    transform: translateX(0);
   }
 }

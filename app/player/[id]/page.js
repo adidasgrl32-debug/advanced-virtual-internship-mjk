@@ -20,9 +20,10 @@ function PlayerContent({ params }) {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const { id } = use(params);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-    
+  const [fontSize, setFontSize] = useState(16);
+
   <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
   
 const audioRef = React.useRef(null);
@@ -103,7 +104,11 @@ const skipForward = () => {
     return "00:00";
   };
 
-  return (
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+return (
     <div className="wrapper">
       <div className="search__background">
         <div className="search__wrapper">
@@ -123,12 +128,16 @@ const skipForward = () => {
                 </div>
               </div>
             </div>
-            <div className="sidebar__toggle--btn">
-              <button type="button">
-                <RxHamburgerMenu />
+          <div className="sidebar__toggle--btn">
+              <button
+                onClick={toggleMenu}
+                aria-label="Toggle Menu"
+                aria-expanded={isOpen}
+                className="md:hidden focus:outline-none p-2"
+              >
+               <RxHamburgerMenu />
               </button>
             </div>
-          </div>
 
           {search && (
             <div className="search__books--wrapper">
@@ -171,6 +180,7 @@ const skipForward = () => {
           )}
         </div>
       </div>
+      </div>
 
             {isLoading ? (
               skeletonItems.map((_, index) => (
@@ -193,7 +203,7 @@ const skipForward = () => {
               <>
 
       <div className="sidebar__overlay sidebar__overlay--hidden"></div>
-      <div className="sidebar sidebar--closed">
+      <div className={`sidebar ${isOpen ? "sidebar--opened" : ""}`}>
         <div className="sidebar__logo">
           <Image
             src="/logo.png"
@@ -234,7 +244,12 @@ const skipForward = () => {
               </div>
             </div>
             <div className="sidebar__link--wrapper sidebar__font--size-wrapper">
-              <div className="sidebar__link--text sidebar__font--size-cicon sidebar__font--size-icon--active">
+             <div
+                onClick={() => setFontSize(14)}
+                className={`sidebar__link--text sidebar__font--size-icon ${
+                fontSize === 14 ? "sidebar__font--size-icon--active" : ""
+                }`}
+              >
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
@@ -251,7 +266,12 @@ const skipForward = () => {
                   </g>
                 </svg>
               </div>
-              <div className="sidebar__link--text sidebar__font--size-icon">
+              <div
+                onClick={() => setFontSize(16)}
+                className={`sidebar__link--text sidebar__font--size-icon ${
+                fontSize === 16 ? "sidebar__font--size-icon--active" : ""
+                }`}
+              >
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
@@ -268,7 +288,12 @@ const skipForward = () => {
                   </g>
                 </svg>
               </div>
-              <div className="sidebar__link--text sidebar__font--size-icon">
+              <div
+                onClick={() => setFontSize(20)}
+                className={`sidebar__link--text sidebar__font--size-icon ${
+                fontSize === 20 ? "sidebar__font--size-icon--active" : ""
+                }`}
+              >
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
@@ -285,7 +310,12 @@ const skipForward = () => {
                   </g>
                 </svg>
               </div>
-              <div className="sidebar__link--text sidebar__font--size-icon">
+              <div
+                onClick={() => setFontSize (24)}
+                className={`sidebar__link--text sidebar__font--size-icon ${
+                fontSize === 24 ? "sidebar__font--size-icon--active" : ""
+                }`}
+                >
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
@@ -338,7 +368,12 @@ const skipForward = () => {
         <div key={index} className="summary">
           <div className="audio__book--summary" style={{ fontSize: "16px" }}>
             <div className="audio__book--summary-title">{item.title}</div>
-            <div className="audio__book--summary-text">{item.summary}</div>
+            <div
+              className="audio__book--summary-text"
+              style={{ fontSize: `${fontSize}px` }}
+              >
+              {item.summary}
+          </div>
           </div>
           <div className="audio__wrapper">
             <audio

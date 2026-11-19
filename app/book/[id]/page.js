@@ -127,8 +127,6 @@ const formatTime = (time) => {
               </div>
             </div>
 
-          <div className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
-              </div>
                 <div className="sidebar__toggle--btn">
                   <button
                     onClick={toggleMenu}
@@ -201,7 +199,7 @@ const formatTime = (time) => {
       ) : (
      <>
           <div className="sidebar__overlay sidebar__overlay--hidden"></div>
-          <div className="sidebar sidebar--closed">
+           <div className={`sidebar ${isOpen ? "sidebar--opened" : ""}`}>
             <div className="sidebar__logo">
               <Image
                 src="/logo.png"
@@ -269,7 +267,6 @@ const formatTime = (time) => {
               </div>
             </div>
           </div>
-
           {data?.map?.((item, index) => (
             <div key={index} className="row">
               <audio />

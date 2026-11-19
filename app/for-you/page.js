@@ -25,6 +25,7 @@ export default function ForYouPage() {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
@@ -106,13 +107,17 @@ export default function ForYouPage() {
 const formatDuration = (seconds) => {
   if (!seconds) return "0:00";
 
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
+const mins = Math.floor(seconds / 60);
+const secs = Math.floor(seconds % 60);
 
   return `${mins}:${String(secs).padStart(2, "0")}`;
-};
+  };
 
-  return (
+ const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+return (
     <div className="wrapper">
       <div className="search__background">
         <div className="search__wrapper">
@@ -127,17 +132,20 @@ const formatDuration = (seconds) => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-
                 <div className="search__icon">
                   <IoMdSearch />
                 </div>
               </div>
             </div>
-            <div className="sidebar__toggle--btn">
-              <button>
-                <RxHamburgerMenu />
-              </button>
-            </div>
+          <div className="sidebar__toggle--btn">
+            <button
+              onClick={toggleMenu}
+              aria-label="Toggle Menu"
+              aria-expanded={isOpen}
+              className="md:hidden focus:outline-none p-2"
+              >
+             <RxHamburgerMenu />
+            </button>
           </div>
 
           {search && (
@@ -181,6 +189,7 @@ const formatDuration = (seconds) => {
           )}
         </div>
       </div>
+      </div>
 
       {isLoading ? (
         skeletonItems.map((_, index) => (
@@ -200,7 +209,7 @@ const formatDuration = (seconds) => {
       ) : (
         <>
           <div className="sidebar__overlay sidebar__overlay--hidden"></div>
-          <div className="sidebar sidebar--closed">
+          <div className={`sidebar ${isOpen ? "sidebar--opened" : ""}`}>
             <div className="sidebar__logo">
               <Image
                 src="/logo.png"
@@ -260,7 +269,7 @@ const formatDuration = (seconds) => {
                 <div className="sidebar__link--wrapper">
                   <div className="sidebar__link--line" />
                   <div className="sidebar__icon--wrapper" />
-      <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                    <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
                 <div className="sidebar__link--text" onClick={() => setIsModalOpen(true)}>
                     <MdLogin /> Login
                 </div>
