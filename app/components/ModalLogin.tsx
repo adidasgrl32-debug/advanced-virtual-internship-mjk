@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { BsPerson } from "react-icons/bs";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../lib/firebase";
 
 interface ModalLoginProps {
@@ -27,10 +27,20 @@ const handleLogin = async () => {
   }
 };
 
+const handleSignup = async () => {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    window.location.href = "/for-you";
+  } catch (error) {
+    console.error("Sign up failed:", error);
+    alert("Sign up failed. Check the browser Console for details.");
+  }
+};
+
 const handleGoogleLogin = async () => {
   try {
     await signInWithPopup(auth, new GoogleAuthProvider());
-    window.location.href = "/choose-plan";
+    window.location.href = "/for-you";
   } catch (error) {
     console.error("Google login failed:", error);
   }
@@ -73,7 +83,7 @@ if (!isOpen) return null;
                   <button
                     type="button"
                     className="btn google__btn--wrapper"
-                    onClick={() => (window.location.href = "/for-you")}
+                    onClick={handleGoogleLogin}
                   >
                     <figure className="google__icon--mask">
                       <Image
@@ -94,16 +104,20 @@ if (!isOpen) return null;
                       className="auth__main--input"
                       type="email"
                       placeholder="Email Address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       />
                   <input
                     className="auth__main--input"
                     type="password"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     />
                     <button
                       type="button"
                       className="btn"
-                      onClick={handleGoogleLogin}
+                      onClick={handleSignup}
                     >
                       <span>Sign up</span>
                     </button>
@@ -137,7 +151,7 @@ if (!isOpen) return null;
                   <button
                     type="button"
                     className="btn google__btn--wrapper"
-                    onClick={() => (window.location.href = "/for-you")}
+                    onClick={handleGoogleLogin}
                   >
                     <figure className="google__icon--mask">
                       <Image

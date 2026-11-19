@@ -10,9 +10,9 @@ import { MdHelpOutline } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import ModalLogin from "../components/ModalLogin";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function SettingsPage() {
   const [search, setSearch] = useState("");
@@ -66,6 +66,11 @@ export default function SettingsPage() {
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    window.location.href = "/";
+  };
 
   return (
     <>
@@ -194,18 +199,22 @@ export default function SettingsPage() {
                   <MdHelpOutline className="w-6 h-6" /> Help & Support
                 </div>
               </div>
-              {!user && (
-                <div className="sidebar__link--wrapper">
-                  <div className="sidebar__link--line" />
-                  <div className="sidebar__icon--wrapper" />
-                  <div
-                    className="sidebar__link--text"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    Login
-                  </div>
+             <div className="sidebar__link--wrapper">
+              <div className="sidebar__link--line" />
+              <div className="sidebar__icon--wrapper" />
+                <div
+                  className="sidebar__link--text"
+                  onClick={() => {
+                    if (user) {
+                    signOut(auth);
+                    } else {
+                    setIsModalOpen(true);
+                    }
+                    }}
+                    >
+                 {user ? "Logout" : "Login"}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>

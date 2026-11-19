@@ -17,8 +17,6 @@ export default function choosePlanPage() {
     const auth = getAuth(app);
 
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("Firebase logged in:", !!currentUser);
-      
       setUser(currentUser);
 
       if (currentUser) {

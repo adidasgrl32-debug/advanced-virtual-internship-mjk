@@ -27,7 +27,7 @@ export default function ForYouPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-  
+
   useEffect(() => {
     Promise.all([
       axios.get(
@@ -43,10 +43,19 @@ export default function ForYouPage() {
       ),
     ])
 
-      .then(([selectedRes, recommendedRes, suggestedRes]) => {
-        setSelectedBooks(selectedRes.data);
-        setRecommendedBooks(recommendedRes.data);
-        setSuggestedBooks(suggestedRes.data);
+      .then(async ([selectedRes, recommendedRes, suggestedRes]) => {
+       const addDuration = async (books) => {
+        return Promise.all(
+          books.map(async (book) => ({
+          ...book,
+      audioDuration: await getAudioDuration(book.audioLink),
+      }))
+      );
+      };
+
+        setSelectedBooks(await addDuration(selectedRes.data));
+        setRecommendedBooks(await addDuration(recommendedRes.data));
+        setSuggestedBooks(await addDuration(suggestedRes.data));
         setIsLoading(false);
       })
 
@@ -79,6 +88,29 @@ export default function ForYouPage() {
   if (error) return <p>Error: {error}</p>;
 
   const skeletonItems = Array.from({ length: 4 });
+
+ const getAudioDuration = (audioLink) => {
+  return new Promise((resolve) => {
+    const audio = new Audio();
+    audio.preload = "metadata";
+    audio.src = audioLink;
+
+    audio.onloadedmetadata = () => {
+      resolve(audio.duration);
+    };
+
+    audio.onerror = () => resolve(0);
+  });
+};
+
+const formatDuration = (seconds) => {
+  if (!seconds) return "0:00";
+
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+
+  return `${mins}:${String(secs).padStart(2, "0")}`;
+};
 
   return (
     <div className="wrapper">
@@ -283,7 +315,7 @@ export default function ForYouPage() {
                             <IoIosPlayCircle />
                           </div>
                           <div className="selected__book--duration">
-                            3 mins 23 secs
+                            {formatDuration(item.audioDuration)}
                           </div>
                         </div>
                       </div>
@@ -347,7 +379,7 @@ export default function ForYouPage() {
                               <CiClock2 />
                             </div>
                             <div className="recommended__book--details-text">
-                              03:24
+                              {formatDuration(item.audioDuration)}
                             </div>
                           </div>
                           <div className="recommended__book--details">
@@ -418,7 +450,7 @@ export default function ForYouPage() {
                               <CiClock2 />
                             </div>
                             <div className="recommended__book--details-text">
-                              03:24
+                              {formatDuration(item.audioDuration)}
                             </div>
                           </div>
                           <div className="recommended__book--details">

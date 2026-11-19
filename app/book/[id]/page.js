@@ -18,6 +18,16 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useRouter } from 'next/navigation';
 import ModalLogin from "../../components/ModalLogin";
 
+const getAudioDuration = (audioLink) => {
+  return new Promise((resolve) => {
+    const audio = new Audio();
+    audio.preload = "metadata";
+    audio.src = audioLink;
+
+    audio.onloadedmetadata = () => resolve(audio.duration);
+    audio.onerror = () => resolve(0);
+  });
+};
 
 export default function BookIdPage({ params }) {
   const [data, setData] = useState([]);
@@ -32,17 +42,14 @@ export default function BookIdPage({ params }) {
   
   <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-  const formatTime = (time) => {
-    if (typeof time === "number" && !isNaN(time)) {
+const formatTime = (time) => {
+  if (!Number.isFinite(time) || time <= 0) return "00:00";
+
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
-  const formatMinutes = minutes.toString().padStart(2, "0");
-  const formatSeconds = seconds.toString().padStart(2, "0");
-    return `${formatMinutes}:${formatSeconds}`;
-    }
-    return "00:00";
-  };
 
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
 
   const handleClick = (item) => {
     if (item.subscriptionRequired) {
@@ -60,10 +67,13 @@ export default function BookIdPage({ params }) {
     if (!id) return;
     axios
       .get(`https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`)
-      .then((response) => {
+        .then(async (response) => {
         setData([response.data]);
-        setIsLoading(false);
-      })
+
+    const seconds = await getAudioDuration(response.data.audioLink);
+      setDuration(seconds);
+      setIsLoading(false);
+})
       .catch((err) => {
         setError(err.message);
         setIsLoading(false);
@@ -316,12 +326,6 @@ export default function BookIdPage({ params }) {
                       </button>
                     </div>
                     <div className="inner-book__bookmark">
-                      <div className="inner-book__bookmark-icon">
-                        <FaRegBookmark />
-                      </div>
-                      <div className="inner-book__bookmark--text">
-                        Add title to My Library
-                      </div>
                     </div>
                     <div className="inner-book__secondary--title">
                       What's it about?

@@ -1,8 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ClientLayout from "./client-layout";
 import { AudioPlayerProvider } from "./components/AudioPlayerProvider";
-import ModalLogin from "./components/ModalLogin";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,12 +25,8 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <AudioPlayerProvider>
-          <ModalLogin>
-            {children}
-          </ModalLogin>
+          {children}
         </AudioPlayerProvider>
-           {children}
-        <ClientLayout />
       </body>
     </html>
   );
