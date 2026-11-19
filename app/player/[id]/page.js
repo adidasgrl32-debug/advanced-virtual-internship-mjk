@@ -14,6 +14,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useParams } from "next/navigation";
 import ModalLogin from "../../components/ModalLogin";
 
+function PlayerDetails() {
+    const params = useParams();
+    return <div>Player ID: {params.id}</div>
+}
+
 export default function PlayerPage() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +26,6 @@ export default function PlayerPage() {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const { id } = useParams();
-  const params = useParams();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
     
@@ -329,7 +333,7 @@ const skipForward = () => {
                   </div>
               <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
                 <div className="sidebar__link--text" onClick={() => setIsModalOpen(true)}>
-                  Logout
+                  Login
                 </div>
                   </div>
                 </div>
