@@ -39,6 +39,7 @@ export default function BookIdPage({ params }) {
   const router = useRouter();
   const [duration, setDuration] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   
   <ModalLogin isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
@@ -101,6 +102,10 @@ const formatTime = (time) => {
 
   const skeletonItems = Array.from({ length: 4 });
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="wrapper">
       <div className="search__background">
@@ -121,14 +126,22 @@ const formatTime = (time) => {
                 </div>
               </div>
             </div>
-            <div className="sidebar__toggle--btn">
-              <button>
-                <RxHamburgerMenu />
-              </button>
+            <div className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
+              <div>
+                <div className="sidebar__toggle--btn">
+                  <button
+                    onClick={toggleMenu}
+                    aria-label="Toggle Menu"
+                    aria-expanded={isOpen}
+                    className="md:hidden focus:outline-none p-2"
+                  >
+                    <RxHamburgerMenu />
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {search && (
+            {search && (
             <div className="search__books--wrapper">
               {searchResults.length === 0 ? (
                 <div className="search__book--link">No books found</div>
@@ -168,6 +181,7 @@ const formatTime = (time) => {
             </div>
           )}
         </div>
+      </div>
       </div>
 
       {isLoading ? (
@@ -326,6 +340,10 @@ const formatTime = (time) => {
                       </button>
                     </div>
                     <div className="inner-book__bookmark">
+                        <div className="inner-book__bookmark-icon">
+                    <FaRegBookmark />
+                  </div>
+                  <div className="inner-book__bookmark--text">Add title to My Library</div>
                     </div>
                     <div className="inner-book__secondary--title">
                       What's it about?
