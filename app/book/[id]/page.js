@@ -126,8 +126,9 @@ const formatTime = (time) => {
                 </div>
               </div>
             </div>
-            <div className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
-              <div>
+
+          <div className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
+              </div>
                 <div className="sidebar__toggle--btn">
                   <button
                     onClick={toggleMenu}
@@ -138,8 +139,6 @@ const formatTime = (time) => {
                     <RxHamburgerMenu />
                   </button>
                 </div>
-              </div>
-            </div>
 
             {search && (
             <div className="search__books--wrapper">
