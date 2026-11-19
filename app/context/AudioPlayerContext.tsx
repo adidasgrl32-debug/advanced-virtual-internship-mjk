@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { AudioPlayerContext } from '../components/AudioPlayerProvider.tsx';
+import { AudioPlayerContext } from '../components/AudioPlayerProvider';
 
 export const useAudioPlayerContext = () => {
   const context = useContext(AudioPlayerContext);
